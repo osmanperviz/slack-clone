@@ -1,14 +1,23 @@
 "use strict"
 
 class RoomController {
+/**
+ * Get rooms
+ * @returns {Room[]}
+ */
   index (req,res) {
 
   }
+
 
   create (req, res) {
 
   }
 
+/**
+ * Get rooms/:roomId
+ * @returns {Room}
+ */
   show (req, res) {
 
   }
@@ -20,6 +29,5 @@ class RoomController {
 
 }
 
-const testCtrl = new RoomController
-
-export default testCtrl
+const roomController = new RoomController
+export default roomController

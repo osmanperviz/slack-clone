@@ -12,6 +12,7 @@
     "react-scripts": "0.9.5"
   },
   "dependencies": {
+    "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "cors": "^2.8.3",
     "debug": "^2.6.3",
@@ -24,13 +25,14 @@
     "react-redux": "^5.0.3",
     "react-router": "^4.0.0",
     "redux": "^3.6.0",
-    "redux-saga": "^0.14.4"
+    "redux-saga": "^0.14.4",
+    "util": "^0.10.3"
   },
   "scripts": {
     "start:front": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "start:backend": "babel-node server/index.js"
+    "start:backend": "DEBUG=slack-clone nodemon server/index.js --exec babel-node --presets es2015,stage-2"
   }
 }

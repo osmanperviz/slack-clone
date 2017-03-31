@@ -1,4 +1,6 @@
 "use strict"
+import Room from '../models/room'
+import User from '../models/user'
 
 class RoomController {
 /**
@@ -6,12 +8,13 @@ class RoomController {
  * @returns {Room[]}
  */
   index (req,res) {
-
+    Room.all()
+        .then(rooms => res.status(200).json(rooms))
+        .catch(e => next(e));
   }
 
 
   create (req, res) {
-
   }
 
 /**
@@ -19,7 +22,7 @@ class RoomController {
  * @returns {Room}
  */
   show (req, res) {
-
+    
   }
 
   delete (req, res) {

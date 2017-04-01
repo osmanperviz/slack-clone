@@ -4,10 +4,10 @@ import RoomController from './controllers/roomController'
 const router = express.Router();
 
 /** Rooms routes **/
-debugger;
 
 router.route('/rooms')
   /** GET /api/rooms - Get list of chat rooms */
+  // .get(RoomController.index)
   .get(RoomController.index)
   /** POST /api/rooms - Create new room */
   .post(RoomController.create)
@@ -19,8 +19,8 @@ router.route('/rooms/:roomsId')
   .get(RoomController.show)
 
 
-/** Messages routes**/
+/** Messages routes **/
 
-/** User routes**/
+/** User routes **/
 
 export default router

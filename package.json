@@ -18,6 +18,8 @@
     "cors": "^2.8.3",
     "debug": "^2.6.3",
     "express": "^4.15.2",
+    "express-validation": "^1.0.2",
+    "http-status": "^1.0.1",
     "mongodb": "^2.2.25",
     "mongoose": "^4.9.2",
     "morgan": "^1.8.1",

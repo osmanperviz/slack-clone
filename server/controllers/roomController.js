@@ -1,6 +1,8 @@
 "use strict"
 import Room from '../models/room'
 import User from '../models/user'
+import APIError from '../helpers/apiError';
+
 
 class RoomController {
 /**
@@ -22,7 +24,7 @@ class RoomController {
  * @returns {Room}
  */
   show (req, res) {
-    
+
   }
 
   delete (req, res) {

@@ -26,8 +26,12 @@ router.route('/rooms/:roomsId/join')
 /** Messages routes **/
 
 /** User routes **/
+router.route('/users/:usersId')
+/** GET /api/users/:usersId - Register on app */
+  .get(UserController.show)
 
 router.route('/users/register')
+/** POST /api/users/register - Register on app */
   .post(UserController.register)
 
 export default router

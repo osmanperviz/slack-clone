@@ -10,18 +10,18 @@ const Schema = mongoose.Schema;
  */
 
  const RoomSchema = new Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  users: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  }],
-  messages: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Message'
-  }]
+    name: {
+      type: String,
+      required: true
+    },
+    users: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }],
+    messages: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Message'
+    }]
  })
 
  /**

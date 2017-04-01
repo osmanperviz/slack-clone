@@ -24,6 +24,18 @@ class UserController {
         })
         .catch((err) => next(err))
     }
+
+  /**
+   * GET /users/:usersId
+   * @returns {User}
+   */
+
+    show (req, res, next) {
+      const { usersId } = req.params
+      User.getUserWithRooms(usersId)
+          .then((room) => res.status(200).json(room))
+          .catch(e => next(e));
+    }
 }
 
 const userController = new UserController

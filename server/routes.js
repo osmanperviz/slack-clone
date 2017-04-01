@@ -12,7 +12,7 @@ router.route('/rooms')
   /** POST /api/rooms - Create new room */
   .post(RoomController.create)
   /** POST /api/rooms/:roomId/join - User join to new room */
-  //.post(RoomController.join)
+  .delete(RoomController.delete)
 
 router.route('/rooms/:roomsId')
   /** GET /api/rooms/:roomId - Get single room */

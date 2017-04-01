@@ -16,6 +16,10 @@ class RoomController {
         .catch(e => next(e));
   }
 
+/**
+ * POST /rooms
+ * @returns {Room}
+ */
   create (req, res, next) {
     const { room } = req.body
     const newRoom = new Room({name: room.name})
@@ -26,9 +30,8 @@ class RoomController {
 
       User.findOneAndUpdate({_id: room.userId},
           {$push: { rooms: newRoom._id} },
-          (err, user) => {
+          (err) => {
             if (err) return next(err)
-            console.log(user)
             res.status(200).json(newRoom)
           });
     })
@@ -45,8 +48,21 @@ class RoomController {
         .catch(e => next(e));
   }
 
-  delete (req, res) {
+/**
+ * DELETE rooms/:roomId
+ * @returns {}
+ */
+  delete (req, res, next) {
+    const { room: { roomId } } = req.body
+    Room.findOne({ _id: ObjectId(roomId) }, (err, room) => {
+      if(err) return next(err)
 
+      room.remove((err) => {
+        if(err) return next(err)
+
+        res.status(200).json({})
+      })
+    })
   }
 
 

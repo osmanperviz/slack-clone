@@ -2,6 +2,7 @@
 import Room from '../models/room'
 import User from '../models/user'
 import APIError from '../helpers/apiError';
+import { ObjectId } from 'mongodb'
 
 
 class RoomController {
@@ -15,13 +16,27 @@ class RoomController {
         .catch(e => next(e));
   }
 
+  create (req, res, next) {
+    const { room } = req.body
+    const newRoom = new Room({name: room.name})
+    newRoom.users.push(ObjectId(room.userId))
 
-  create (req, res) {
+    newRoom.save((err, newRoom) => {
+      if(err) return next(err)
+
+      User.findOneAndUpdate({_id: room.userId},
+          {$push: { rooms: newRoom._id} },
+          (err, user) => {
+            if (err) return next(err)
+            console.log(user)
+            res.status(200).json(newRoom)
+          });
+    })
   }
 
 /**
  * Get rooms/:roomId
- * @returns {Room}
+ * @returns {Room[Message]}
  */
   show (req, res, next) {
     const { roomsId } = req.params

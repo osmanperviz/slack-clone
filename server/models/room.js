@@ -1,4 +1,8 @@
 import mongoose from 'mongoose';
+import APIError from '../helpers/apiError';
+
+import Messages from './message'
+
 
 /**
  * Room Schema
@@ -27,6 +31,24 @@ RoomSchema.statics = {
     return this.find({})
                 .select('-messages -users')
                 .exec()
+  },
+  getRoomWithMessages(id) {
+    return this.findById({_id: id})
+      .select('-users')
+      .populate({
+        path: 'messages',
+        select: 'text _creator',
+        populate: {
+          path: '_creator',
+          select: 'name'
+        }
+      })
+      .exec()
+      .then((room) => {
+        if (room) return room
+        const err = new APIError('No such room exists!',404);
+        return Promise.reject(err);
+      })
   }
 }
 

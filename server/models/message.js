@@ -10,11 +10,11 @@ import mongoose from 'mongoose';
     required: true
   },
   _creator: {
-    type: Number,
+    type:  mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
   room: {
-    type: Number,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Room'
   }
  })

@@ -23,8 +23,11 @@ class RoomController {
  * Get rooms/:roomId
  * @returns {Room}
  */
-  show (req, res) {
-
+  show (req, res, next) {
+    const { roomsId } = req.params
+    Room.getRoomWithMessages(roomsId)
+        .then((room) => res.status(200).json(room))
+        .catch(e => next(e));
   }
 
   delete (req, res) {

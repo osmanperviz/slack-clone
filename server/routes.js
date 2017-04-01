@@ -7,16 +7,19 @@ const router = express.Router();
 
 router.route('/rooms')
   /** GET /api/rooms - Get list of chat rooms */
-  // .get(RoomController.index)
   .get(RoomController.index)
   /** POST /api/rooms - Create new room */
   .post(RoomController.create)
-  /** POST /api/rooms/:roomId/join - User join to new room */
+  /** DELETE /api/rooms/:roomId - Delete room */
   .delete(RoomController.delete)
 
 router.route('/rooms/:roomsId')
-  /** GET /api/rooms/:roomId - Get single room */
+/** GET /api/rooms/:roomId - Get single room */
   .get(RoomController.show)
+
+router.route('/rooms/:roomsId/join')
+/** GET /api/rooms/:roomId/join- Join user to the room */
+  .post(RoomController.join)
 
 
 /** Messages routes **/

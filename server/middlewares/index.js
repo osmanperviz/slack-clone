@@ -4,12 +4,11 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import { convertErrors, handleNotFound } from './errorHandeling'
 
-export default function(err, req, res, next) {
+export default function() {
   return compose([
     bodyParser.json(),
     bodyParser.urlencoded({ extended: false }),
     cors(),
     // convertErrors(err, req, res, next),
-    // handleNotFound(err, req, res, next)
   ])
 }

@@ -21,14 +21,13 @@ class RoomController {
  * @returns {Room}
  */
   create (req, res, next) {
-    const { room } = req.body
-    const newRoom = new Room({name: room.name})
-    newRoom.users.push(ObjectId(room.userId))
+    const newRoom = new Room({name: req.body.name})
+    newRoom.users.push(ObjectId(req.current_user))
 
     newRoom.save((err, newRoom) => {
       if(err) return next(err)
 
-      User.findOneAndUpdate({_id: room.userId},
+      User.findOneAndUpdate({_id: req.current_user},
           {$push: { rooms: newRoom._id} },
           (err) => {
             if (err) return next(err)
@@ -36,6 +35,28 @@ class RoomController {
           });
     })
   }
+/**
+ * GET rooms/:roomId/join
+ * @returns {Room[Message]}
+ */
+
+ join (req, res, next) {
+   const { roomsId } = req.params
+   Room.findOne({ _id: ObjectId(roomsId) }, (err, room) => {
+     room.users.push(ObjectId(req.current_user))
+
+     room.save((err, room) => {
+        if(err) return next(err)
+        User.findOneAndUpdate({_id: req.current_user},
+            {$push: { rooms: room._id} },
+            (err) => {
+              if (err) return next(err)
+              res.status(200).json({message: 'Successfully assigned'})
+        });
+      })
+   })
+
+ }
 
 /**
  * Get rooms/:roomId
@@ -64,7 +85,6 @@ class RoomController {
       })
     })
   }
-
 
 }
 

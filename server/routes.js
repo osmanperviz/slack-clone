@@ -1,5 +1,6 @@
 import express from 'express';
 import RoomController from './controllers/roomController'
+import UserController from './controllers/userController'
 
 const router = express.Router();
 
@@ -25,5 +26,8 @@ router.route('/rooms/:roomsId/join')
 /** Messages routes **/
 
 /** User routes **/
+
+router.route('/users/register')
+  .post(UserController.register)
 
 export default router

@@ -10,6 +10,7 @@ class RoomController {
  * Get rooms
  * @returns {Room[]}
  */
+
   index (req,res) {
     Room.all()
         .then(rooms => res.status(200).json(rooms))
@@ -20,48 +21,41 @@ class RoomController {
  * POST /rooms
  * @returns {Room}
  */
+
   create (req, res, next) {
     const newRoom = new Room({name: req.body.name})
     newRoom.users.push(ObjectId(req.current_user))
 
-    newRoom.save((err, newRoom) => {
-      if(err) return next(err)
-
-      User.findOneAndUpdate({_id: req.current_user},
-          {$push: { rooms: newRoom._id} },
-          (err) => {
-            if (err) return next(err)
-            res.status(200).json(newRoom)
-          });
-    })
+    newRoom.save()
+      .then((newRoom) => {
+        return User.findOneAndUpdate({_id: req.current_user}, {$push: { rooms: newRoom._id} }).exec()
+      })
+      .then( res.status(200).json(newRoom) )
+      .catch((err) => next(err))
   }
 /**
  * GET rooms/:roomId/join
- * @returns {Room[Message]}
+ * @returns {message}
  */
 
- join (req, res, next) {
-   const { roomsId } = req.params
-   Room.findOne({ _id: ObjectId(roomsId) }, (err, room) => {
-     room.users.push(ObjectId(req.current_user))
-
-     room.save((err, room) => {
-        if(err) return next(err)
-        User.findOneAndUpdate({_id: req.current_user},
-            {$push: { rooms: room._id} },
-            (err) => {
-              if (err) return next(err)
-              res.status(200).json({message: 'Successfully assigned'})
-        });
-      })
-   })
-
- }
+  join (req, res, next) {
+    const { roomsId } = req.params
+    Room.findById(roomsId).exec().then((room) => {
+      room.users.push(ObjectId(req.current_user))
+      return room.save()
+    }).then((updatedRoom) => {
+      return User.findOneAndUpdate({_id: req.current_user}, {$push: { rooms: updatedRoom._id} }).exec()
+    }).then((updatedUser) => {
+      res.status(200).json({message: 'Successfully assigned'})
+    })
+    .catch((err) => next(err))
+  }
 
 /**
  * Get rooms/:roomId
  * @returns {Room[Message]}
  */
+
   show (req, res, next) {
     const { roomsId } = req.params
     Room.getRoomWithMessages(roomsId)
@@ -73,6 +67,7 @@ class RoomController {
  * DELETE rooms/:roomId
  * @returns {}
  */
+
   delete (req, res, next) {
     const { room: { roomId } } = req.body
     Room.findOne({ _id: ObjectId(roomId) }, (err, room) => {

@@ -7,7 +7,8 @@ import mongoose from 'mongoose';
  const UserSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: 'Username is required'
+    required: true,
+    // unique: true
   },
   rooms: [{
     type: mongoose.Schema.Types.ObjectId,
@@ -17,6 +18,10 @@ import mongoose from 'mongoose';
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Message'
   }]
+ })
+
+ UserSchema.pre('save', (next, done) => {
+
  })
 
  export default mongoose.model('User', UserSchema);

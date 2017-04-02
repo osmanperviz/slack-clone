@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import APIError from '../helpers/apiError';
 
 /**
  * User Schema
@@ -40,8 +41,5 @@ import mongoose from 'mongoose';
     }
  }
 
- UserSchema.pre('save', (next, done) => {
-
- })
 
  export default mongoose.model('User', UserSchema);

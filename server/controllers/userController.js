@@ -10,17 +10,17 @@ class UserController {
    * @returns {User}
    */
     register (req, res, next) {
-      const newUser = new User(req.body)
+      const newUser = new User({username: req.body.username})
       newUser.save()
         .then((newUser) => {
-          return Room.findOneAndUpdate({name: defaultRoom}, {new: true}, { $push: { users: newUser._id } })
+            return Room.findOneAndUpdate({name: defaultRoom}, {new: true}, { $push: { users: newUser._id } })
         })
         .then((room) => {
           newUser.rooms = room._id
           return newUser.save()
         })
         .then((newUser) => {
-          res.status(200).json(newUser)
+          res.status(200).json({id: newUser._id})
         })
         .catch((err) => next(err))
     }

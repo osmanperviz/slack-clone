@@ -7,7 +7,7 @@ export const sagaMiddleware = createSagaMiddleware();
 
 export default function configureStore(initialState) {
   const enhancer = compose(
-    window.devToolsExtension() : f => f,
+    // window.devToolsExtension() : f => f,
     applyMiddleware(
       loggerMiddleware,
       sagaMiddleware

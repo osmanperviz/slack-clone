@@ -15,6 +15,7 @@
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "compose-middleware": "^2.2.0",
+    "concurrently": "^3.4.0",
     "cors": "^2.8.3",
     "debug": "^2.6.3",
     "express": "^4.15.2",
@@ -32,7 +33,7 @@
     "util": "^0.10.3"
   },
   "scripts": {
-    "start:front": "react-scripts start",
+    "start": " concurrently \"react-scripts start\" \"DEBUG=slack-clone nodemon server/index.js --exec babel-node --presets es2015,stage-2\"" ,
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",

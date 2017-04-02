@@ -1,6 +1,7 @@
 import express from 'express';
 import RoomController from './controllers/roomController'
 import UserController from './controllers/userController'
+import MessageController from './controllers/messageController'
 
 const router = express.Router();
 
@@ -24,6 +25,12 @@ router.route('/rooms/:roomsId/join')
 
 
 /** Messages routes **/
+
+router.route('/messages')
+/** GET /api/messages - Create Message */
+  .post(MessageController.create)
+
+
 
 /** User routes **/
 router.route('/users/:usersId')

@@ -3,6 +3,8 @@ import APIError from '../helpers/apiError';
 
 import Messages from './message'
 const Schema = mongoose.Schema;
+import { channel } from '../config/constants'
+
 
 
 /**
@@ -21,7 +23,11 @@ const Schema = mongoose.Schema;
     messages: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Message'
-    }]
+    }],
+    type: {
+      type: String,
+      default: channel
+    }
  })
 
  /**

@@ -11,11 +11,17 @@ import mongoose from 'mongoose';
     },
     _creator: {
       type:  mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'User',
+      required: true
     },
     room: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Room'
+      ref: 'Room',
+      required: true
+    },
+    created_at: {
+      type: Date,
+      default: Date.now
     }
  })
 

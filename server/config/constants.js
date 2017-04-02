@@ -2,5 +2,5 @@
 export const defaultRoom = 'general';
 
 // room types
-export const channels = 'channels';
+export const channel = 'channel';
 export const directMessages = 'directMessages';

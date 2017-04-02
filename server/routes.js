@@ -29,6 +29,9 @@ router.route('/rooms/:roomsId/join')
 router.route('/messages')
 /** GET /api/messages - Create Message */
   .post(MessageController.create)
+router.route('/messages/:messagesId')
+/** PUT /api/messages.:messageId - Update Message */
+  .put(MessageController.update)
 
 
 

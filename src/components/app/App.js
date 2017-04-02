@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 import './App.css';
 
 class App extends Component {
+  componentDidMount() {
+    // This doesn't refer to the `span`s! It refers to the children between
+    // last line's `<App></App>`, which are undefined.
+    console.log(this.props.children);
+  }
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          Prdoood, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+      <MuiThemeProvider>
+        { this.props.children }
+      </MuiThemeProvider>
+    )
   }
 }
 

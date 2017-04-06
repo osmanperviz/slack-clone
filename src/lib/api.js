@@ -1,12 +1,12 @@
 class Api {
-  static backend_endpoint = "http://localhost:4000"
+  static backend_endpoint = "http://localhost:4000/api/"
 
   static headers() {
     return {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
       'dataType': 'json',
-      'X-Requested-With': 'XMLHttpRequest'
+      'Access-Control-Allow-Origin': '*'
     }
   }
 

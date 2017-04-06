@@ -1,11 +1,16 @@
 import React from 'react';
-import { Route } from 'react-router'
+import { browserHistory, Redirect, Route, Router } from 'react-router';
 
 import App from './components/app/App'
+import Register from './containers/register'
+import Socket from './containers/socket'
 
 export default (
-  <Route path="/" component={App} >
-    {/* <Route path="profile/:username" component={Profile} /> */}
-    {/* <IndexRoute component={Home} /> */}
-  </Route>
+  <Router history={browserHistory}>
+    <Route component={App} >
+        <Route path='/register' component={Register} />
+        <Route path='/messages' component={Socket} />
+        <Redirect from="/" to="register" />
+    </Route>
+  </Router>
 )

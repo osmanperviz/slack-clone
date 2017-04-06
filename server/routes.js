@@ -1,17 +1,15 @@
 import express from 'express';
-import RoomController from './controllers/roomController'
+import UserController from './controllers/userController'
 
 const router = express.Router();
 
-router.route('/rooms')
-  /** GET /api/rooms - Get list of chat rooms */
-  .get(RoomController.index)
-  /** POST /api/rooms - Create new room */
-  .post(RoomController.create)
+/** User routes **/
+router.route('/users/:usersId')
+/** GET /api/users/:usersId - Get user details*/
+  .get(UserController.show)
 
-router.route('/:roomsId')
-  /** GET /api/rooms/:roomId - Get single room */
-  .get(RoomController.show)
-
+router.route('/users/register')
+/** POST /api/users/register - Register on app */
+  .post(UserController.register)
 
 export default router

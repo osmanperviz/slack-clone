@@ -1,19 +1,36 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+import io from 'socket.io-client'
+
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { setSocket } from '../../actions/socketActions'
 import './App.css';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props)
+    const socket = io.connect('http://localhost:4000')
+    this.props.setSocket(socket);
+  }
+
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          Prdoood, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+      <MuiThemeProvider>
+        { this.props.children }
+      </MuiThemeProvider>
+    )
   }
 }
 
-export default App;
+function mapDispatchToProps(dispatch, ownProps) {
+  return {
+    setSocket: (socket) => {
+      dispatch(setSocket(socket));
+    }
+  }
+}
+
+
+export default connect(null, mapDispatchToProps)(App)

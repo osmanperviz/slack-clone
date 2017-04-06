@@ -1,9 +1,18 @@
-
 import { combineReducers } from 'redux'
-import messagesReducer from './messagesReducer'
+import messages from './messagesReducer'
+import rooms from './roomsReducer'
+import users from './usersReducer'
+import currentRoom from './currentRoom'
+import socket from './socket'
+import user from './userReducer'
 
 const reducer = combineReducers(Object.assign({},{
-  messages: messagesReducer
+  messages,
+  rooms,
+  users,
+  currentRoom,
+  socket,
+  user
 }));
 
 export default reducer

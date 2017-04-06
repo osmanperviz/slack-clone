@@ -1,8 +1,10 @@
 ## instructions
 ```
+
 cd path/to/project
 
 npm install
+
 
 npm run start
 

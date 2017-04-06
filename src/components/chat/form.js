@@ -67,7 +67,7 @@ class Form extends Component {
     _handleSubmit = (event) => {
         event.preventDefault();
         const { socket, activeRoomId } = this.props
-        this.props.socket.emit(NEW_MESSAGE, {
+        socket.emit(NEW_MESSAGE, {
             roomId: activeRoomId,
             userId: sessionStorage.getItem('id'),
             text: this.state.value

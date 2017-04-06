@@ -12,21 +12,27 @@ import Message from '../server/models/message'
  * @param {Object} socket - The socket.
  */
 export default async function (io, socket) {
+
   socket.on(SocketEvents.USER_REGISTRATION, async (user) => {
     const { username } = user
-    
+
     try {
       const currentUser = await User.create({ username: username})
+      io.sockets.sockets[currentUser._id] = socket.id;
+
+      // broadcast to other clients that user has connected
+      socket.broadcast.emit(SocketEvents.NEW_USER, currentUser);
+
       const room =  await Room.findOneAndUpdate({name: defaultRoom},{ $push: { users: currentUser._id } }).exec()
       currentUser.rooms.push(ObjectId(room._id))
       await currentUser.save()
 
-      io.sockets.sockets[currentUser._id] = socket.id;
 
       const currentRoom = await Room.getInitialRoom()
+      const rooms = await Room.find({}).where('users').in([ ObjectId(currentUser._id)]).exec()
 
       socket.join(currentRoom._id)
-      socket.emit(SocketEvents.USER_REGISTER, { currentUser, currentRoom })
+      socket.emit(SocketEvents.USER_REGISTER, { currentUser, currentRoom, rooms })
 
       const users = await User.getAll()
       socket.emit(SocketEvents.USERS, users )

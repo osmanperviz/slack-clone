@@ -10,13 +10,13 @@ import  { setUser, setNewRoom, setRooms } from '../../actions/socketActions'
 class Register extends Component {
 
   componentDidMount() {
-    const { socket, setUser, setNewRoom } = this.props
+    const { socket, setUser, setNewRoom, setRooms } = this.props
 
     socket.on(SocketEvents.USER_REGISTER, (initialInfo) => {
      const { currentUser, currentRoom } = initialInfo
      setUser(currentUser)
      setNewRoom(currentRoom)
-     setRooms({rooms: currentRoom})
+     setRooms({rooms:[currentRoom]})
      sessionStorage.setItem('id', currentUser._id);
      browserHistory.push('/messages')
     });

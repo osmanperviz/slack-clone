@@ -72,3 +72,10 @@ export function setUser(user) {
     user
   }
 }
+
+export function newUser(user) {
+  return {
+    type: types.NEW_USER,
+    user
+  }
+}

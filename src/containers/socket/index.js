@@ -11,16 +11,14 @@ import SideMenu from '../../components/sideMenu'
 
 import { setRooms,
         setUsers,
-        setSocket,
         updateMessages,
         setNewRoom,
         addNewRoom,
         updateMessage,
-        newRoomCreated
+        newRoomCreated,
+        newUser
       } from '../../actions/socketActions'
 
-
-// const socket = io.connect('http://localhost:4000')
 
 const styles = {
     container: {
@@ -44,7 +42,7 @@ class Socket extends Component {
           setNewRoom,
           newRoomCreated,
           updateMessage,
-          setSocket
+          newUser
         } = this.props;
 
      const events = [];
@@ -76,6 +74,11 @@ class Socket extends Component {
       newRoomCreated(newRoom)
     });
     events.push(SocketEvents.NEW_ROOM_CREATED)
+
+    socket.on(SocketEvents.NEW_USER, (user) => {
+      newUser(user)
+    });
+    events.push(SocketEvents.NEW_USER)
 
     socket.on(SocketEvents.MESSAGES, (roomId, message) => {
         if (roomId && message) {
@@ -174,6 +177,9 @@ function mapDispatchToProps(dispatch, ownProps) {
     },
     updateMessage: (roomId, message) => {
       dispatch(updateMessage(roomId, message));
+    },
+    newUser: (user) => {
+      dispatch(newUser(user));
     }
   }
 }

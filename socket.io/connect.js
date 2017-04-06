@@ -18,6 +18,12 @@ export default async function (io, socket) {
        io.sockets.sockets[id] = socket.id;
 
        try {
+
+         const user = await User.findById(id)
+
+         // broadcast to other clients that user has connected
+         socket.broadcast.emit(SocketEvents.NEW_USER, user);
+
          const rooms = await Room.find({}).where('users').in([ ObjectId(id)]).exec()
          const currentRoom = await Room.getInitialRoom()
 

@@ -44,6 +44,13 @@ class SideMenu extends Component {
       })
   }
 
+  _channelSubmit = (value) => {
+    this.props.handleChanelSubmit(value)
+    this.setState({
+      modalOpen: false
+    });
+  }
+
   _selectUser = (value) => {
     this.props.handlePrivateRoomSubmit(value)
     this.setState({
@@ -91,6 +98,7 @@ class SideMenu extends Component {
           handleChanelSubmit={this.props.handleChanelSubmit}
           handlePrivateRoomSubmit={this.props.handlePrivateRoomSubmit}
           selectUser={this._selectUser}
+          channelSubmit={this._channelSubmit}
         />
       </div>
     )

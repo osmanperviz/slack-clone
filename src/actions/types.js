@@ -12,6 +12,8 @@
   export const USER_REGISTRATION = 'USER_REGISTRATION'
   export const USER_REGISTER = 'USER_REGISTER'
   export const SET_USER = 'SET_USER'
+  export const NEW_USER = 'NEW_USER'
+  export const USERS = 'USERS'
 
 
   export const GET_MESSAGES = 'GET_MESSAGES'
@@ -20,5 +22,3 @@
 
   export const ROOMS = 'ROOMS'
   export const UPDATE_USER = 'UPDATE_USER'
-  export const USER = 'USER'
-  export const USERS = 'USERS'

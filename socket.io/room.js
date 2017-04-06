@@ -63,11 +63,9 @@ export default async function (io, socket) {
 
       socket.join(newDirectRoom._id);
 
-      //I know not best solution :)
-      [io.sockets.sockets[creator], io.sockets.sockets[participantId]].forEach((reciver) =>{
-        socket.to(reciver).emit(SocketEvents.NEW_ROOM_CREATED, newDirectRoom)
-      })
 
+      socket.to(io.sockets.sockets[participantId]).emit(SocketEvents.NEW_ROOM_CREATED, newDirectRoom)
+      socket.emit(SocketEvents.NEW_ROOM_CREATED, newDirectRoom)
     } catch(err) {
       console.log(err)
     }

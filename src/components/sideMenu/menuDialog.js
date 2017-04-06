@@ -17,13 +17,10 @@ class MenuDialog extends Component {
     }
   }
 
-  _handleChanelSubmit = (event) => {
+  _channelSubmit = (event) => {
     event.preventDefault();
-    this.props.handleChanelSubmit(this.state.value)
-    this.setState({
-      value: '',
-      open: false
-    });
+    this.props.channelSubmit(this.state.value)
+    this.setState({ value: '' });
   }
 
   _handlePrivateRoomSubmit = (event) => {
@@ -60,7 +57,7 @@ class MenuDialog extends Component {
       >
         { this.props.roomType === 'chanel' ?
               (
-                <form onSubmit={this._handleChanelSubmit}>
+                <form onSubmit={this._channelSubmit}>
                     <TextField
                       hintText="Chanel Name"
                       fullWidth={true}
@@ -102,8 +99,8 @@ MenuDialog.propTypes = {
   users: React.PropTypes.array.isRequired,
   roomType: React.PropTypes.string.isRequired,
   handlePrivateRoomSubmit: React.PropTypes.func.isRequired,
-  handleChanelSubmit: React.PropTypes.func.isRequired,
-  selectUser: React.PropTypes.func.isRequired,
+  channelSubmit: React.PropTypes.func.isRequired,
+  selectUser: React.PropTypes.func
 };
 
 export default MenuDialog

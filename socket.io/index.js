@@ -16,8 +16,9 @@ function io(server) {
   io.on('connection', (socket) => {
       console.log('client connected');
 
+      // perform on registration
       userRegistration(io, socket)
-      
+
       // perform initial actions on connect
       connect(io, socket)
 

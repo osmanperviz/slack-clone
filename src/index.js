@@ -8,7 +8,6 @@ import routes from './routes'
 
 
 const store = createStore({})
-
 sagaMiddleware.run(rootSaga)
 
 

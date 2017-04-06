@@ -1,43 +1,11 @@
 import express from 'express';
-import RoomController from './controllers/roomController'
 import UserController from './controllers/userController'
-import MessageController from './controllers/messageController'
 
 const router = express.Router();
 
-/** Rooms routes **/
-
-router.route('/rooms')
-  /** GET /api/rooms - Get list of chat rooms */
-  .get(RoomController.index)
-  /** POST /api/rooms - Create new room */
-  .post(RoomController.create)
-  /** DELETE /api/rooms/:roomId - Delete room */
-  .delete(RoomController.delete)
-
-router.route('/rooms/:roomsId')
-/** GET /api/rooms/:roomId - Get single room */
-  .get(RoomController.show)
-
-router.route('/rooms/:roomsId/join')
-/** GET /api/rooms/:roomId/join- Join user to the room */
-  .post(RoomController.join)
-
-
-/** Messages routes **/
-
-router.route('/messages')
-/** GET /api/messages - Create Message */
-  .post(MessageController.create)
-router.route('/messages/:messagesId')
-/** PUT /api/messages.:messageId - Update Message */
-  .put(MessageController.update)
-
-
-
 /** User routes **/
 router.route('/users/:usersId')
-/** GET /api/users/:usersId - Register on app */
+/** GET /api/users/:usersId - Get user details*/
   .get(UserController.show)
 
 router.route('/users/register')

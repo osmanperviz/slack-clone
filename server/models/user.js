@@ -9,7 +9,7 @@ import APIError from '../helpers/apiError';
     username: {
       type: String,
       required: true,
-      // unique: true
+      unique: true
     },
     rooms: [{
       type: mongoose.Schema.Types.ObjectId,
@@ -25,20 +25,13 @@ import APIError from '../helpers/apiError';
  * Statics
  */
  UserSchema.statics = {
-   getUserWithRooms(id) {
-     return this.findById({_id: id})
-       .select('-messages')
-       .populate({
-         path:'rooms',
-         select: '_id name type'
-       })
-       .exec()
-       .then((user) => {
-         if (user) return user
-         const err = new APIError('No such user exists!', 404);
-         return Promise.reject(err);
-       })
+    getAll() {
+      return this
+              .find({})
+              .select('-rooms -messages')
+              .exec()
     }
+
  }
 
 

@@ -9,7 +9,7 @@ export default (
   <Router history={browserHistory}>
     <Route component={App} >
         <Route path='/register' component={Register} />
-        <Route path='/chat' component={Socket} />
+        <Route path='/messages' component={Socket} />
         <Redirect from="/" to="register" />
     </Route>
   </Router>

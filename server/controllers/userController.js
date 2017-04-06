@@ -6,23 +6,19 @@ import { defaultRoom } from '../config/constants'
 
 class UserController {
   /**
-   * POST register
+   * POST /users/register
    * @returns {User}
    */
-    register (req, res, next) {
-      const newUser = new User({username: req.body.username})
-      newUser.save()
-        .then((newUser) => {
-            return Room.findOneAndUpdate({name: defaultRoom}, {new: true}, { $push: { users: newUser._id } })
-        })
-        .then((room) => {
-          newUser.rooms = room._id
-          return newUser.save()
-        })
-        .then((newUser) => {
-          res.status(200).json({id: newUser._id})
-        })
-        .catch((err) => next(err))
+    async register (req, res, next) {
+      try {
+        const newUser = await User.create({ username: req.body.username})
+        const room =  await Room.findOneAndUpdate({name: defaultRoom},{ $push: { users: newUser._id } }).exec()
+        newUser.rooms.push(ObjectId(room._id))
+        await newUser.save()
+        res.status(200).json({id: newUser._id})
+      } catch (err) {
+        console.log(err)
+      }
     }
 
   /**
@@ -30,12 +26,7 @@ class UserController {
    * @returns {User}
    */
 
-    show (req, res, next) {
-      const { usersId } = req.params
-      User.getUserWithRooms(usersId)
-          .then((room) => res.status(200).json(room))
-          .catch(e => next(e));
-    }
+  async show (req, res, next) {}
 }
 
 const userController = new UserController

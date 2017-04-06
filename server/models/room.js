@@ -3,9 +3,7 @@ import APIError from '../helpers/apiError';
 
 import Messages from './message'
 const Schema = mongoose.Schema;
-import { channel } from '../config/constants'
-
-
+import { channel, defaultRoom } from '../config/constants'
 
 /**
  * Room Schema
@@ -27,6 +25,10 @@ import { channel } from '../config/constants'
     type: {
       type: String,
       default: channel
+    },
+    _creator: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
     }
  })
 
@@ -34,30 +36,38 @@ import { channel } from '../config/constants'
  * Statics
  */
 RoomSchema.statics = {
-  all() {
-    return this.find({})
-                .select('-messages -users')
-                .exec()
-  },
+
   getRoomWithMessages(id) {
     return this.findById({_id: id})
       .select('-users')
       .populate({
         path: 'messages',
-        select: 'text _creator',
+        select: 'text created_at _creator',
+        options: { limit: 25 },
         populate: {
           path: '_creator',
-          select: 'name'
+          select: 'username'
         }
       })
       .exec()
-      .then((room) => {
-        if (room) return room
-        const err = new APIError('No such room exists!',404);
-        return Promise.reject(err);
-      })
+  },
+
+  getInitialRoom() {
+    return this.findOne({name: defaultRoom})
+              .select('-users')
+              .populate('messages')
+              .populate({
+                path: 'messages',
+                select: 'text created_at _creator',
+                options: { limit: 25 },
+                populate: {
+                  path: '_creator',
+                  select: 'username'
+                }
+              })
   }
 }
+
 /** Remove all ref to this room **/
 RoomSchema.pre('remove', function(next) {
   this.model('User').update(

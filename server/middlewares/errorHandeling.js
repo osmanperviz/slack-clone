@@ -4,7 +4,6 @@ import httpStatus from 'http-status';
 export function convertErrors(err, req, res, next) {
   if (!(err instanceof APIError)) {
       const apiError = new APIError(err.message, err.status, err.isPublic);
-      console.log(apiError)
       return next(apiError);
     }
     return next(err);

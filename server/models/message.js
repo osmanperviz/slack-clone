@@ -25,4 +25,8 @@ import mongoose from 'mongoose';
     }
  })
 
+ MessageSchema.statics = {
+
+ }
+
  export default mongoose.model('Message', MessageSchema);
